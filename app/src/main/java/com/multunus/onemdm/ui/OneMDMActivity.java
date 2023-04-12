@@ -14,14 +14,14 @@ import com.multunus.onemdm.BuildConfig;
 import com.multunus.onemdm.R;
 import com.multunus.onemdm.device.RegistrationService;
 
-import io.fabric.sdk.android.Fabric;
+//import io.fabric.sdk.android.Fabric;
 
 public class OneMDMActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
+//            Fabric.with(this, new Crashlytics());
         }
         setContentView(R.layout.activity_one_mdm);
         if(isNetworkAvailable()) {
