@@ -14,7 +14,8 @@ public class OneMDMApplication extends Application{
         if(!BuildConfig.DEBUG) {
             Rollbar.init(this, "c096aaa23042478fafb34be8f937ad5c", "production");
         }
-        RealmConfiguration config = new RealmConfiguration.Builder(this).build();
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(config);
     }
 }

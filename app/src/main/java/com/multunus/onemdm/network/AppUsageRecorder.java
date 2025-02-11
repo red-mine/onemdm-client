@@ -94,7 +94,7 @@ public class AppUsageRecorder {
 
     private Iterator<AppUsage> getAppUsage() {
         RealmResults<AppUsage> results = Realm.getDefaultInstance().where(AppUsage.class).
-                findAllSorted("id", Sort.DESCENDING);
+                sort("id", Sort.DESCENDING).findAll();
         return results.iterator();
     }
 
@@ -107,6 +107,5 @@ public class AppUsageRecorder {
                 .between("id",firstIdOfDataToBeSynced,lastIdOfAppDataToBeSynced).findAll().clear();
         realm.commitTransaction();
         Logger.debug("No of records pending to be synced = " + realm.where(AppUsage.class).count());
-
     }
 }

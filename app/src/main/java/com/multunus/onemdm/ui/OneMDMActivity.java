@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.crashlytics.android.Crashlytics;
+// import com.crashlytics.android.Crashlytics;
 import com.multunus.onemdm.BuildConfig;
 import com.multunus.onemdm.R;
 import com.multunus.onemdm.device.RegistrationService;
