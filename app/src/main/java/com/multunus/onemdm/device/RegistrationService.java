@@ -26,7 +26,7 @@ public class RegistrationService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         deviceRegistration.sendRegistrationRequestToServer(getApplicationContext());
         Log.d(Config.PREFERENCE_TAG, "inside RegistrationService.onHandleIntent");
-        startService(new Intent(this.getApplicationContext(), OneMDMService.class));
+        // startService(new Intent(this.getApplicationContext(), OneMDMService.class));
     }
 
 }

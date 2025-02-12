@@ -23,8 +23,8 @@ public class OneMDMService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Logger.debug("inside  OneMDMService.onCreate");
         if(Config.TRACK_APP_USAGE) {
-
             IntentFilter screenIntentFilter = new IntentFilter(Intent.ACTION_USER_PRESENT);
             screenIntentFilter.addAction(Intent.ACTION_SCREEN_OFF);
             BroadcastReceiver screenStatus = new ScreenStatusTracker();

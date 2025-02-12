@@ -7,8 +7,9 @@ import com.multunus.onemdm.BuildConfig;
 
 final public class Config {
     public static final String ACCESS_TOKEN = "access_token";
-    public static final String HOST_URL = (BuildConfig.DEBUG)? "https://demo-onemdm.herokuapp.com/"
-        : "http://onemdm.herokuapp.com/"; //"http://192.168.2.92:3000/";
+    // public static final String HOST_URL = (BuildConfig.DEBUG)? "https://demo-onemdm.herokuapp.com/"
+    //     : "http://onemdm.herokuapp.com/"; 
+    public static final String HOST_URL = "http://10.11.108.35:3000/";
     public static final String REGISTRATION_URL = HOST_URL + "devices";
     public static final String HEARTBEAT_URL = HOST_URL + "heartbeats";
     public static final String APP_USAGE_TRACKING_URL = HOST_URL + "app_usages";
