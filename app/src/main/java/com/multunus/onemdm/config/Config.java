@@ -1,0 +1,33 @@
+package com.multunus.onemdm.config;
+
+import android.os.Build;
+import android.app.AlarmManager;
+
+import com.multunus.onemdm.BuildConfig;
+
+final public class Config {
+    public static final String ACCESS_TOKEN = "access_token";
+    public static final String HOST_URL = (BuildConfig.DEBUG)? "https://demo-onemdm.herokuapp.com/"
+        : "http://onemdm.herokuapp.com/"; //"http://192.168.2.92:3000/";
+    public static final String REGISTRATION_URL = HOST_URL + "devices";
+    public static final String HEARTBEAT_URL = HOST_URL + "heartbeats";
+    public static final String APP_USAGE_TRACKING_URL = HOST_URL + "app_usages";
+    public static final String APP_INSTALLED_URL = HOST_URL + "installations/installed";
+    public static final long USAGE_COLLECTION_TRACKING_INTERVAL_IN_SECONDS = 2;
+    public static final long USAGE_SYNCING_INTERVAL = AlarmManager.INTERVAL_HALF_DAY;
+
+    public static String PREFERENCE_TAG = "onemdm";
+    public static final int DEFAULT_HEARTBEAT_RETRY_INTERVAL = 30;
+    public static final String GCM_SENDER_ID = "958182646350";
+    public static final String APP_DATA = "APP_DATA";
+    public static final int MAX_COUNT_OF_DATA_TO_BE_SYNCED = 100;
+
+    //Feature Flag(s)
+
+    public static final boolean TRACK_APP_USAGE = android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
+
+
+    private Config(){
+
+    }
+}

@@ -21,7 +21,6 @@ import java.util.Calendar;
 
 public class HeartbeatRecorder {
 
-
     public void sendHeartbeatToServer(final Context context) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest request = new CustomJsonObjectRequest(
