@@ -49,24 +49,24 @@ public class HeartbeatRecorder {
         requestQueue.add(request);
     }
 
-    public void configureNextHeartbeat(Context context,long nextHearbeatTime) {
-        configureNextHeartbeatWithMilliSeconds(context,nextHearbeatTime * 1000);
+    public void configureNextHeartbeat(Context context,long nextHeartbeatTime) {
+        configureNextHeartbeatWithMilliSeconds(context,nextHeartbeatTime * 1000);
     }
 
     public  void configureNextHeartbeatForRetry(Context context) {
-        configureNextHeartbeatWithMilliSeconds(context,getDefaultNextHearbeatTime());
+        configureNextHeartbeatWithMilliSeconds(context,getDefaultNextHeartbeatTime());
     }
 
-    public void configureNextHeartbeatWithMilliSeconds(Context context,long nextHearbeatTime) {
-        Logger.debug(" next heartbeat time " + nextHearbeatTime);
+    public void configureNextHeartbeatWithMilliSeconds(Context context,long nextHeartbeatTime) {
+        Logger.debug(" next heartbeat time " + nextHeartbeatTime);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, HeartbeatListener.class);
         PendingIntent sender = PendingIntent.getBroadcast(context, 0,
                 intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP,
-                nextHearbeatTime, sender);
+                nextHeartbeatTime, sender);
     }
-    private long getDefaultNextHearbeatTime() {
+    private long getDefaultNextHeartbeatTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, Config.DEFAULT_HEARTBEAT_RETRY_INTERVAL);
         Logger.debug(calendar.getTime().toString());
