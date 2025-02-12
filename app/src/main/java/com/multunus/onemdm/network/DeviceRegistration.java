@@ -38,6 +38,7 @@ public class DeviceRegistration {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Logger.debug("response = " + response);
                         saveSettings(context,response);
                     }
                 },

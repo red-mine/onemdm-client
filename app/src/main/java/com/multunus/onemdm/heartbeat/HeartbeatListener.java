@@ -18,6 +18,7 @@ public class HeartbeatListener extends BroadcastReceiver {
     HeartbeatListener(HeartbeatRecorder heartbeatRecorder){
         this.heartbeatRecorder = heartbeatRecorder;
     }
+    
     @Override
     public void onReceive(final Context context, Intent intent) {
         Logger.debug("broadcast received for alarm manager");

@@ -66,6 +66,7 @@ public class HeartbeatRecorder {
         alarmManager.set(AlarmManager.RTC_WAKEUP,
                 nextHeartbeatTime, sender);
     }
+    
     private long getDefaultNextHeartbeatTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, Config.DEFAULT_HEARTBEAT_RETRY_INTERVAL);
