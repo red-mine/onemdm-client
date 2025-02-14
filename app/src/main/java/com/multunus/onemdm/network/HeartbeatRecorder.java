@@ -62,7 +62,7 @@ public class HeartbeatRecorder {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, HeartbeatListener.class);
         PendingIntent sender = PendingIntent.getBroadcast(context, 0,
-                intent, 0);
+                intent, PendingIntent.FLAG_IMMUTABLE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,
                 nextHeartbeatTime, sender);
     }

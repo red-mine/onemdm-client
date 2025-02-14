@@ -2,6 +2,8 @@ package com.multunus.onemdm;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -46,7 +48,16 @@ public class OneMDMService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         Logger.debug("inside  OneMDMService.onStartCommand");
-        Notification notification = new NotificationCompat.Builder(this)
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String CHANNEL_ID = "OneMDMService Channel ID";
+        String CHANNEL_NAME = "OneMDMService Channel Name";
+
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+
+        notificationManager.createNotificationChannel(notificationChannel);
+                
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.onemdm_running_text))
                 .setSmallIcon(R.mipmap.ic_launcher)
