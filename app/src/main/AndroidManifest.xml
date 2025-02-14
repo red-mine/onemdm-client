@@ -17,7 +17,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.OneMDMActivity">
+        <activity android:name=".ui.OneMDMActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +28,8 @@
 
         <receiver
             android:name=".heartbeat.HeartbeatListener"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -60,6 +62,7 @@
             </intent-filter>
         </service>
         <!-- [END gcm_listener] -->
+
         <!-- [START instanceId_listener] -->
         <service
             android:name=".gcm.GCMInstanceIDListenerService"
@@ -90,7 +93,8 @@
         </receiver>
         <receiver
             android:name=".usage.AppUsageDataSyncer"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -105,7 +109,9 @@
         <receiver
             android:name=".usage.ScreenStatusTracker"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
+        </receiver>
+
         <receiver
             android:name=".BootCompleteReceiver"
             android:enabled="true"
