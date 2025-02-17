@@ -26,5 +26,5 @@
 #build keystore
 *.keystore
 *.key
-*.jks
+#*.jks
 !debug.keystore

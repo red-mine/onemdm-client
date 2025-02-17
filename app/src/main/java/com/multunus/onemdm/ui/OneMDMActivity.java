@@ -32,7 +32,6 @@ public class OneMDMActivity extends AppCompatActivity {
         }
     }
 
-
     private void registerDevice() {
         Intent intent = new Intent(this, RegistrationService.class);
         startService(intent);

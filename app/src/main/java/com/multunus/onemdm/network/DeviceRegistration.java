@@ -103,7 +103,7 @@ public class DeviceRegistration {
     }
 
     private String getAppVersion(Context context) {
-        try{
+        try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),
                     PackageManager.GET_META_DATA);
             return info.versionName + " - " + info.versionCode;
