@@ -64,6 +64,12 @@ android {
                 releaseBuild = false;
             }
         }
+        debug {
+            storeFile file("../app/sign/platform.jks")
+            storePassword '123456'
+            keyAlias 'platform'
+            keyPassword '123456'
+        }
     }
     buildTypes {
         release {
