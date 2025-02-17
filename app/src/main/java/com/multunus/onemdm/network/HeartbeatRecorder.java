@@ -61,6 +61,7 @@ public class HeartbeatRecorder {
         Logger.debug(" next heartbeat time " + nextHeartbeatTime);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, HeartbeatListener.class);
+        intent.setAction("com.multunus.onemdm.heartbeat.HeartbeatListener");
         PendingIntent sender = PendingIntent.getBroadcast(context, 0,
                 intent, PendingIntent.FLAG_IMMUTABLE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,
