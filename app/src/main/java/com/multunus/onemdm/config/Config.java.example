@@ -16,7 +16,6 @@ final public class Config {
     public static final long USAGE_COLLECTION_TRACKING_INTERVAL_IN_SECONDS = 2;
     public static final long USAGE_SYNCING_INTERVAL = AlarmManager.INTERVAL_HALF_DAY;
 
-
     public static String PREFERENCE_TAG = "onemdm";
     public static final int DEFAULT_HEARTBEAT_RETRY_INTERVAL = 30;
     public static final String GCM_SENDER_ID = "958182646350";
