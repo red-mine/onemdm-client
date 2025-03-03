@@ -144,7 +144,6 @@ public class AppInstallerService extends IntentService {
         );
     }
 
-
     private void createNotificationForInstallAndSaveToPreferences(NotificationManager notificationManager,
                                                                   PendingIntent resultPendingIntent) {
         Notification.Builder notificationBuilder = new Notification.Builder(context)

@@ -36,7 +36,7 @@ public class OneMDMService extends Service {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(this, AppUsageDataSyncer.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    this, 0, intent, 0);
+                    this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                     System.currentTimeMillis(), Config.USAGE_SYNCING_INTERVAL,
                     pendingIntent);
