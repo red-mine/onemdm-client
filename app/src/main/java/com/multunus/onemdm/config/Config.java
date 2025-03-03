@@ -27,7 +27,6 @@ final public class Config {
 
     public static final boolean TRACK_APP_USAGE = android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
 
-
     private Config(){
 
     }

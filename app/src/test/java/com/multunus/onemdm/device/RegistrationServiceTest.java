@@ -29,7 +29,7 @@ public class RegistrationServiceTest {
 
     @Test
     public void testRegistration(){
-        if(Config.TRACK_APP_USAGE){
+        if (Config.TRACK_APP_USAGE){
             Intent intent =  new Intent(RuntimeEnvironment.application,RegistrationService.class);
             DeviceRegistration deviceRegistration = mock(DeviceRegistration.class);
             RegistrationService registrationService = new RegistrationService(deviceRegistration);

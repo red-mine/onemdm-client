@@ -21,6 +21,7 @@ public class AppUsageCollector implements Runnable{
     public AppUsageCollector(Context context){
         this.context = context;
     }
+
     @Override
     public void run() {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -35,6 +36,7 @@ public class AppUsageCollector implements Runnable{
             Logger.warning("Exception while reading the running tasks", ex);
         }
     }
+
     private void updateAppUsageForTodayForTheApp(String runningApp, String today,Realm realm) {
         RealmResults<AppUsage> results = getAppUsageForAppForToday(
                 realm, runningApp, today);
@@ -59,7 +61,6 @@ public class AppUsageCollector implements Runnable{
         Logger.debug("app usage for " + runningApp + " is "
                 + appUsage.getAppUsageDurationPerDayInSeconds());
         realm.commitTransaction();
-
     }
 
     private RealmResults<AppUsage> getAppUsageForAppForToday(Realm realm, String runningApp, String today) {
