@@ -29,26 +29,26 @@ public class AppUsageRecorder {
 
     public void sendAppUsageDataToServer(final Context context) {
         final Iterator<AppUsage> appUsages = getAppUsage();
-        if(appUsages.hasNext()) {
+        if (appUsages.hasNext()) {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             JsonObjectRequest request = new CustomJsonObjectRequest(
-                    Request.Method.POST,
-                    Config.APP_USAGE_TRACKING_URL,
-                    getJsonPayload(appUsages),
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Logger.debug("Successfully synced data for date ");
-                            removeSyncedData();
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Logger.warning(error.toString());
-                        }
-                    },
-                    context
+                Request.Method.POST,
+                Config.APP_USAGE_TRACKING_URL,
+                getJsonPayload(appUsages),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.debug("Successfully synced data for date ");
+                        removeSyncedData();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Logger.warning(error.toString());
+                    }
+                },
+                context
             );
             requestQueue.add(request);
         }
@@ -58,7 +58,7 @@ public class AppUsageRecorder {
         JSONArray appUsageJson = new JSONArray();
 
         int ctr = 0;
-        while (appUsages.hasNext() && ctr < Config.MAX_COUNT_OF_DATA_TO_BE_SYNCED){
+        while (appUsages.hasNext() && ctr < Config.MAX_COUNT_OF_DATA_TO_BE_SYNCED) {
             try {
                 AppUsage appUsage = appUsages.next();
                 JSONObject appUsageData = new JSONObject();
@@ -68,14 +68,12 @@ public class AppUsageRecorder {
                 appUsageData.put("used_on",appUsage.getAppUsedOn());
                 appUsageJson.put(appUsageData);
                 ctr++;
-                if(ctr == 1){
+                if (ctr == 1) {
                     this.lastIdOfAppDataToBeSynced = appUsage.getId();
-                }
-                else{
+                } else {
                     this.firstIdOfDataToBeSynced = appUsage.getId();
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.error(e);
                 Rollbar.reportException(e);
             }
@@ -83,8 +81,7 @@ public class AppUsageRecorder {
         JSONObject data = new JSONObject();
         try {
             data.put("app_usage", appUsageJson);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.error(e);
             Rollbar.reportException(e);
         }
@@ -98,13 +95,13 @@ public class AppUsageRecorder {
         return results.iterator();
     }
 
-    private void removeSyncedData(){
+    private void removeSyncedData() {
         Logger.debug("data to be deleted is between " + firstIdOfDataToBeSynced + "and " + lastIdOfAppDataToBeSynced);
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
         realm.where(AppUsage.class)
-                .between("id",firstIdOfDataToBeSynced,lastIdOfAppDataToBeSynced).findAll().clear();
+                .between("id",firstIdOfDataToBeSynced,lastIdOfAppDataToBeSynced).findAll().deleteAllFromRealm();
         realm.commitTransaction();
         Logger.debug("No of records pending to be synced = " + realm.where(AppUsage.class).count());
     }
