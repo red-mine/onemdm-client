@@ -9,7 +9,7 @@ import com.multunus.onemdm.network.AppUsageRecorder;
 public class AppUsageDataSyncer extends BroadcastReceiver {
     private final AppUsageRecorder appUsagerecorder;
 
-    public AppUsageDataSyncer(){
+    public AppUsageDataSyncer() {
         this.appUsagerecorder = new AppUsageRecorder();
     }
 

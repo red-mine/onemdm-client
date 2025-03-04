@@ -32,7 +32,6 @@ public class AppUsageDataSyncerServiceTest {
 
     @Test
     public void sendHeartbeatOnReboot(){
-
         Intent intent = new Intent(Intent.ACTION_BOOT_COMPLETED);
         ShadowApplication application = ShadowApplication.getInstance();
         assertTrue("Heartbeat not registered for on Reboot ",

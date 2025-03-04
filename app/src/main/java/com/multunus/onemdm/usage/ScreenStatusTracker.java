@@ -23,15 +23,15 @@ public class ScreenStatusTracker extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Logger.debug(" received action " + intent.getAction());
-        if(intent.getAction().equals(Intent.ACTION_USER_PRESENT)){
+        if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
             Logger.debug("Screen and keyboard on ");
             Logger.debug("starting tracking service");
             scheduledFuture = scheduledThreadPoolExecutor.scheduleAtFixedRate(new AppUsageCollector(context), 1,
                     Config.USAGE_COLLECTION_TRACKING_INTERVAL_IN_SECONDS, TimeUnit.SECONDS);
 
-        }else if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)){
+        } else if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
             Logger.debug("stopping tracking service");
-            if(scheduledFuture != null){
+            if (scheduledFuture != null) {
                 scheduledFuture.cancel(true);
                 scheduledFuture = null;
             }
