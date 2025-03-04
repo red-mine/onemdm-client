@@ -20,7 +20,6 @@ import com.multunus.onemdm.model.App;
 import com.multunus.onemdm.util.Logger;
 
 import java.util.UUID;
-
 public class AppInstallerService extends IntentService {
 
     private Context context;

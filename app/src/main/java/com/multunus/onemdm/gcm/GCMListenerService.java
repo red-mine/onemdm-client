@@ -24,7 +24,7 @@ public class GCMListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        Logger.debug("data "+data.toString());
+        Logger.debug("data " + data.toString());
         String message = data.getString("message");
         Logger.debug("Message: " + message);
         Intent intent = new Intent(this, AppInstallerService.class);
@@ -32,10 +32,10 @@ public class GCMListenerService extends GcmListenerService {
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
         App app = gson.fromJson(message,App.class);
-        Logger.debug(" app ID"+app.getId());
-        Logger.debug(" app package name "+app.getPackageName());
-        Logger.debug(" APK URL = "+app.getApkUrl());
-        intent.putExtra(Config.APP_DATA,app);
+        Logger.debug(" app ID" + app.getId());
+        Logger.debug(" app package name " + app.getPackageName());
+        Logger.debug(" APK URL = " + app.getApkUrl());
+        intent.putExtra(Config.APP_DATA, app);
         startService(intent);
     }
 }
