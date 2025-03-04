@@ -43,16 +43,16 @@ public class AppUsageCollector implements Runnable{
         AppUsage appUsage;
         realm.beginTransaction();
 
-        if(results.size() > 0){
+        if (!results.isEmpty()) {
             Logger.debug("found the record from DB");
             appUsage = results.first();
-        }
-        else{
+        } else {
             Logger.debug("not found the record, so creating");
-            appUsage = realm.createObject(AppUsage.class);
-            appUsage.setId(Calendar.getInstance().getTimeInMillis());
+            appUsage = realm.createObject(AppUsage.class, Calendar.getInstance().getTimeInMillis());
+//            appUsage.setId(Calendar.getInstance().getTimeInMillis());
         }
 
+        assert appUsage != null;
         appUsage.setPackageName(runningApp);
         appUsage.setAppUsedOn(today);
         appUsage.setAppUsageDurationPerDayInSeconds(

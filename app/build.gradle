@@ -55,21 +55,25 @@ android {
     signingConfigs {
         release {
             try {
-                storeFile file("../app/sign/platform.jks")
-                storePassword '123456'
-                keyAlias 'platform'
-                keyPassword '123456'
+                storeFile file(System.getenv("KEYSTORE"))
+                storePassword System.getenv("STORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+                // storeFile file("../app/sign/platform.jks")
+                // storePassword '123456'
+                // keyAlias 'platform'
+                // keyPassword '123456'
             }
             catch (Exception ex){
                 releaseBuild = false;
             }
         }
-        debug {
-            storeFile file("../app/sign/platform.jks")
-            storePassword '123456'
-            keyAlias 'platform'
-            keyPassword '123456'
-        }
+        // debug {
+        //     storeFile file("../app/sign/platform.jks")
+        //     storePassword '123456'
+        //     keyAlias 'platform'
+        //     keyPassword '123456'
+        // }
     }
     buildTypes {
         release {
