@@ -25,7 +25,7 @@ public class OneMDMService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Logger.debug("inside  OneMDMService.onCreate");
+        Logger.debug("inside OneMDMService.onCreate");
         if (Config.TRACK_APP_USAGE) {
             IntentFilter screenIntentFilter = new IntentFilter(Intent.ACTION_USER_PRESENT);
             screenIntentFilter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -35,19 +35,20 @@ public class OneMDMService extends Service {
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(this, AppUsageDataSyncer.class);
+            intent.setAction("com.multunus.onemdm.usage.AppUsageDataSyncer");
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                     System.currentTimeMillis(), Config.USAGE_SYNCING_INTERVAL,
                     pendingIntent);
 
-            Logger.debug("registered alarmManager");
+            Logger.debug("registered TRACK_APP_USAGE alarmManager");
         }
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Logger.debug("inside  OneMDMService.onStartCommand");
+        Logger.debug("inside OneMDMService.onStartCommand");
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         String CHANNEL_ID = "OneMDMService Channel ID";
@@ -69,7 +70,7 @@ public class OneMDMService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Logger.debug("inside  OneMDMService.onDestroy");
+        Logger.debug("inside OneMDMService.onDestroy");
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.multunus.onemdm.network.AppUsageRecorder;
+import com.multunus.onemdm.util.Logger;
 
 public class AppUsageDataSyncer extends BroadcastReceiver {
     private final AppUsageRecorder appUsagerecorder;
@@ -19,6 +20,8 @@ public class AppUsageDataSyncer extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Logger.debug("AppUsageDataSyncer broadcast received for alarm manager");
+
         appUsagerecorder.sendAppUsageDataToServer(context);
     }
 

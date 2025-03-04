@@ -30,7 +30,7 @@ public class HeartbeatRecorder {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            configureNextHeartbeat(context,response.getLong("next_heartbeat_time"));
+                            configureNextHeartbeat(context, response.getLong("next_heartbeat_time"));
                         }
                         catch (Exception ex){
 
@@ -50,14 +50,14 @@ public class HeartbeatRecorder {
     }
 
     public void configureNextHeartbeat(Context context,long nextHeartbeatTime) {
-        configureNextHeartbeatWithMilliSeconds(context,nextHeartbeatTime * 1000);
+        configureNextHeartbeatWithMilliSeconds(context, nextHeartbeatTime * 1000);
     }
 
     public  void configureNextHeartbeatForRetry(Context context) {
-        configureNextHeartbeatWithMilliSeconds(context,getDefaultNextHeartbeatTime());
+        configureNextHeartbeatWithMilliSeconds(context, getDefaultNextHeartbeatTime());
     }
 
-    public void configureNextHeartbeatWithMilliSeconds(Context context,long nextHeartbeatTime) {
+    public void configureNextHeartbeatWithMilliSeconds(Context context, long nextHeartbeatTime) {
         Logger.debug(" next heartbeat time " + nextHeartbeatTime);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, HeartbeatListener.class);

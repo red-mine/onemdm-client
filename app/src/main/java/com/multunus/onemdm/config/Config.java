@@ -15,7 +15,7 @@ final public class Config {
     public static final String APP_USAGE_TRACKING_URL = HOST_URL + "app_usages";
     public static final String APP_INSTALLED_URL = HOST_URL + "installations/installed";
     public static final long USAGE_COLLECTION_TRACKING_INTERVAL_IN_SECONDS = 2;
-    public static final long USAGE_SYNCING_INTERVAL = AlarmManager.INTERVAL_HALF_DAY;
+    public static final long USAGE_SYNCING_INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
 
     public static String PREFERENCE_TAG = "onemdm";
     public static final int DEFAULT_HEARTBEAT_RETRY_INTERVAL = 30;
