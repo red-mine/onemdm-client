@@ -22,6 +22,7 @@ def buildNumber = BUILD_NUM.toInteger()
 
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'
 
 //apply plugin: 'com.noveogroup.android.check'
 //apply plugin: 'io.fabric'
