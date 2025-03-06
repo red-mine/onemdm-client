@@ -25,7 +25,7 @@ public class OneMDMActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_one_mdm);
         if(isNetworkAvailable()) {
-            registerDevice();
+            // registerDevice();
         }
         else{
             notifyFailure();

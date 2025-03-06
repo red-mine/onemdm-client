@@ -32,12 +32,12 @@ import org.json.JSONObject;
 
 public class DeviceRegistration {
 
-    public void sendRegistrationRequestToServer(final Context context) {
+    public void sendRegistrationRequestToServer(final Context context, final String gcmToken) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest deviceRegistrationRequest = new JsonObjectRequest(
                 Request.Method.POST,
                 Config.REGISTRATION_URL,
-                getJsonPayload(context),
+                getJsonPayload(context, gcmToken),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -71,13 +71,13 @@ public class DeviceRegistration {
         new HeartbeatRecorder().configureNextHeartbeatWithMilliSeconds(context,nextHeartbeatTime);
     }
 
-    private JSONObject getJsonPayload(Context context) {
+    private JSONObject getJsonPayload(final Context context, final String gcmToken) {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
         JSONObject deviceData = new JSONObject();
         try {
-            deviceData.put("device", new JSONObject(gson.toJson(getDevice(context))));
+            deviceData.put("device", new JSONObject(gson.toJson(getDevice(context, gcmToken))));
         } catch (Exception e) {
             Logger.error(e);
             Rollbar.reportException(e);
@@ -86,27 +86,12 @@ public class DeviceRegistration {
         return deviceData;
     }
 
-    private Device getDevice(Context context) throws Exception{
+    private Device getDevice(final Context context, final String gcmToken) throws Exception{
         Device device = new Device();
         device.setModel(getDeviceModel());
         device.setImeiNumber(getImeiNumber(context));
         device.setUniqueId(getAndroidId(context));
-        final String[] gcmToken = {""};
-        FirebaseMessaging.getInstance().getToken()
-            .addOnCompleteListener(new OnCompleteListener<String>() {
-                @Override
-                public void onComplete(@NonNull Task<String> task) {
-                    if (!task.isSuccessful()) {
-                        Logger.warning("Fetching FCM registration token failed", task.getException());
-                        return;
-                    }
-
-                    // Get new FCM registration token
-                    gcmToken[0] = task.getResult();
-                }
-            });
-        Logger.debug("GCM Registration Token: " + gcmToken[0]);
-        device.setGcmToken(gcmToken[0]);
+        device.setGcmToken(gcmToken);
         device.setClientVersion(getAppVersion(context));
         device.setOsVersion(Build.VERSION.RELEASE);
         return device;
