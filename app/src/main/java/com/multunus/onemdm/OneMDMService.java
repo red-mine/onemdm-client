@@ -11,7 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.multunus.onemdm.config.Config;
 import com.multunus.onemdm.usage.AppUsageDataSyncer;

@@ -45,40 +45,15 @@
 <!--            android:name="io.fabric.ApiKey"-->
 <!--            android:value="40398ae61eb2772d8e7ea420907cab4c04fbe419" />-->
 
-        <!-- [START gcm_receiver] -->
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.multunus.onemdm" />
-            </intent-filter>
-        </receiver>
-        <!-- [END gcm_receiver] -->
-
-
-        <!-- [START gcm_listener] -->
+        <!-- [START fcm_listener] -->
         <service
-            android:name=".gcm.GCMListenerService"
+            android:name=".fcm.FCMListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!-- [END gcm_listener] -->
-
-        <!-- [START instanceId_listener] -->
-        <service
-            android:name=".gcm.GCMInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-        <!-- [END instanceId_listener] -->
+        <!-- [END fcm_listener] -->
 
         <service
             android:name=".device.RegistrationService"

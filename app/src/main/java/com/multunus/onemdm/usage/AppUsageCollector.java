@@ -2,7 +2,7 @@ package com.multunus.onemdm.usage;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.multunus.onemdm.config.Config;
 import com.multunus.onemdm.model.AppUsage;

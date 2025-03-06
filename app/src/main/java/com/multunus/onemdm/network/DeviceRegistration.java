@@ -8,14 +8,17 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -88,11 +91,22 @@ public class DeviceRegistration {
         device.setModel(getDeviceModel());
         device.setImeiNumber(getImeiNumber(context));
         device.setUniqueId(getAndroidId(context));
-        InstanceID instanceID = InstanceID.getInstance(context);
-        String gcmToken = instanceID.getToken(Config.GCM_SENDER_ID,
-                GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-        Logger.debug("GCM Registration Token: " + gcmToken);
-        device.setGcmToken(gcmToken);
+        final String[] gcmToken = {""};
+        FirebaseMessaging.getInstance().getToken()
+            .addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    if (!task.isSuccessful()) {
+                        Logger.warning("Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+
+                    // Get new FCM registration token
+                    gcmToken[0] = task.getResult();
+                }
+            });
+        Logger.debug("GCM Registration Token: " + gcmToken[0]);
+        device.setGcmToken(gcmToken[0]);
         device.setClientVersion(getAppVersion(context));
         device.setOsVersion(Build.VERSION.RELEASE);
         return device;

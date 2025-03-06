@@ -147,7 +147,7 @@ public class AppInstallerService extends IntentService {
                                                                   PendingIntent resultPendingIntent) {
         Notification.Builder notificationBuilder = new Notification.Builder(context)
                 .setContentTitle(app.getName())
-                .setSmallIcon(R.drawable.cast_ic_notification_0)
+                .setSmallIcon(R.drawable.googleg_standard_color_18)
                 .setContentText("Click to Install ")
                 .setContentIntent(resultPendingIntent)
                 .setAutoCancel(true)
