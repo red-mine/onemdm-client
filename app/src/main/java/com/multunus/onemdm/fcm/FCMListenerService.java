@@ -37,7 +37,7 @@ public class FCMListenerService extends FirebaseMessagingService {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
-        App app = gson.fromJson(message,App.class);
+        App app = gson.fromJson(message, App.class);
         Logger.debug(" app ID" + app.getId());
         Logger.debug(" app package name " + app.getPackageName());
         Logger.debug(" APK URL = " + app.getApkUrl());
