@@ -3,6 +3,7 @@ package com.multunus.onemdm.app;
 import android.app.DownloadManager;
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -50,12 +51,11 @@ public class AppInstallerService extends IntentService {
         super.onDestroy();
     }
 
-    private void installOrDownloadApp(String apkURL){
+    private void installOrDownloadApp(String apkURL) {
         Logger.debug("APK url " + apkURL);
-        if(apkURL.equals("")){
+        if (apkURL.equals("")) {
             createActionForInstall();
-        }
-        else {
+        } else {
             downloadAndShowInstallNotification();
         }
     }
@@ -121,7 +121,7 @@ public class AppInstallerService extends IntentService {
                 context,
                 getUniqueId(),
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -145,7 +145,14 @@ public class AppInstallerService extends IntentService {
 
     private void createNotificationForInstallAndSaveToPreferences(NotificationManager notificationManager,
                                                                   PendingIntent resultPendingIntent) {
-        Notification.Builder notificationBuilder = new Notification.Builder(context)
+        String CHANNEL_ID = "AppInstallerService Channel ID";
+        String CHANNEL_NAME = "AppInstallerService Channel Name";
+
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+
+        notificationManager.createNotificationChannel(notificationChannel);
+
+        Notification.Builder notificationBuilder = new Notification.Builder(context, CHANNEL_ID)
                 .setContentTitle(app.getName())
                 .setSmallIcon(R.drawable.googleg_standard_color_18)
                 .setContentText("Click to Install ")

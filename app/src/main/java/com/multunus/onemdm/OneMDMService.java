@@ -57,7 +57,7 @@ public class OneMDMService extends Service {
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
 
         notificationManager.createNotificationChannel(notificationChannel);
-                
+
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.onemdm_running_text))
