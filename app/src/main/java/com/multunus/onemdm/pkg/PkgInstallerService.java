@@ -1,4 +1,4 @@
-package com.multunus.onemdm.app;
+package com.multunus.onemdm.pkg;
 
 import android.app.DownloadManager;
 import android.app.IntentService;
@@ -17,28 +17,28 @@ import android.os.Environment;
 
 import com.multunus.onemdm.R;
 import com.multunus.onemdm.config.Config;
-import com.multunus.onemdm.model.App;
+import com.multunus.onemdm.model.Pkg;
 import com.multunus.onemdm.util.Logger;
 
 import java.util.UUID;
-public class AppInstallerService extends IntentService {
+public class PkgInstallerService extends IntentService {
 
     private Context context;
-    private String apkURL = "";
-    private App app;
+    private String otaURL = "";
+    private Pkg pkg;
 
-    public AppInstallerService() {
-        super("AppInstallerService");
+    public PkgInstallerService() {
+        super("PkgInstallerService");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Logger.debug("AppInstallerService  started");
+        Logger.debug("PkgInstallerService  started");
         this.context = getApplicationContext();
-        this.app = intent.getParcelableExtra(Config.APP_DATA);
-        this.apkURL = app.getApkUrl();
-        Logger.debug("APP URL "+apkURL);
-        installOrDownloadApp(apkURL);
+        this.pkg = intent.getParcelableExtra(Config.OTA_DATA);
+        this.otaURL = pkg.getOtaUrl();
+        Logger.debug("OTA URL " + otaURL);
+        installOrDownloadPkg(otaURL);
     }
 
     @Override
@@ -51,9 +51,9 @@ public class AppInstallerService extends IntentService {
         super.onDestroy();
     }
 
-    private void installOrDownloadApp(String apkURL) {
-        Logger.debug("APK url " + apkURL);
-        if (apkURL.equals("")) {
+    private void installOrDownloadPkg(String otaURL) {
+        Logger.debug("OTA url " + otaURL);
+        if (otaURL.equals("")) {
             createActionForInstall();
         } else {
             downloadAndShowInstallNotification();
@@ -72,7 +72,7 @@ public class AppInstallerService extends IntentService {
     }
 
     private long enqueueDownload(DownloadManager downloadManager) {
-        Uri uri = Uri.parse(apkURL);
+        Uri uri = Uri.parse(otaURL);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setDescription("Downloading...");
         request.setTitle(getString(R.string.app_name));
@@ -96,7 +96,7 @@ public class AppInstallerService extends IntentService {
                             .getInt(columnIndex)) {
                         Logger.debug(" download successfully completed");
                         context.unregisterReceiver(this);
-                        showAppInstallNotification();
+                        showPkgInstallNotification();
                     }
                     cursor.close();
                 }
@@ -104,7 +104,7 @@ public class AppInstallerService extends IntentService {
         };
     }
 
-    private void showAppInstallNotification() {
+    private void showPkgInstallNotification() {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         PendingIntent resultPendingIntent = createActionForInstallAfterDownload();
@@ -113,7 +113,7 @@ public class AppInstallerService extends IntentService {
     }
 
     private void createActionForInstall(){
-        final Uri marketUri = Uri.parse("market://details?id=" + app.getPackageName());
+        final Uri marketUri = Uri.parse("market://details?id=" + pkg.getFingerPrint());
         Intent intent = new Intent(Intent.ACTION_VIEW, marketUri);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -133,7 +133,7 @@ public class AppInstallerService extends IntentService {
         pendingIntent.setData(Uri.fromFile(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DOWNLOADS + "/onemdm.apk")));
         pendingIntent.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true);
-        pendingIntent.putExtra(Intent.EXTRA_INSTALLER_PACKAGE_NAME, app.getPackageName());
+        pendingIntent.putExtra(Intent.EXTRA_INSTALLER_PACKAGE_NAME, pkg.getFingerPrint());
         return PendingIntent.getActivity(
                 context,
                 getUniqueId(),
@@ -144,15 +144,15 @@ public class AppInstallerService extends IntentService {
 
     private void createNotificationForInstallAndSaveToPreferences(NotificationManager notificationManager,
                                                                   PendingIntent resultPendingIntent) {
-        String CHANNEL_ID = "AppInstallerService Channel ID";
-        String CHANNEL_NAME = "AppInstallerService Channel Name";
+        String CHANNEL_ID = "PkgInstallerService Channel ID";
+        String CHANNEL_NAME = "PkgInstallerService Channel Name";
 
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
 
         notificationManager.createNotificationChannel(notificationChannel);
 
         Notification.Builder notificationBuilder = new Notification.Builder(context, CHANNEL_ID)
-                .setContentTitle(app.getName())
+                .setContentTitle(pkg.getName())
                 .setSmallIcon(R.drawable.googleg_standard_color_18)
                 .setContentText("Click to Install ")
                 .setContentIntent(resultPendingIntent)
@@ -167,13 +167,13 @@ public class AppInstallerService extends IntentService {
         }
 
         notificationManager.notify(getUniqueId(), notification);
-        saveApptoPreferences();
+        savePkgtoPreferences();
     }
 
-    private void saveApptoPreferences(){
+    private void savePkgtoPreferences(){
         SharedPreferences.Editor editor = this.context.getSharedPreferences(
                 Config.PREFERENCE_TAG, Context.MODE_PRIVATE).edit();
-        editor.putLong(app.getPackageName(), app.getId());
+        editor.putLong(pkg.getFingerPrint(), pkg.getId());
         editor.apply();
     }
 
