@@ -149,7 +149,7 @@ public class AppInstallerService extends IntentService {
     private void createNotificationForInstallAndSaveToPreferences(NotificationManager notificationManager,
                                                                   PendingIntent resultPendingIntent) {
         String CHANNEL_ID = "AppInstallerService Channel ID";
-        String CHANNEL_NAME = "AppInstallerService Channel Name";
+        String CHANNEL_NAME = "AppInstallerService Channel";
 
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
 

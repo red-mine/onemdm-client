@@ -52,7 +52,7 @@ public class OneMDMService extends Service {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         String CHANNEL_ID = "OneMDMService Channel ID";
-        String CHANNEL_NAME = "OneMDMService Channel Name";
+        String CHANNEL_NAME = "OneMDMService Channel";
 
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
 

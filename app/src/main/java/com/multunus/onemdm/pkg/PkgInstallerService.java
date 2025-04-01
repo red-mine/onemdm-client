@@ -145,7 +145,7 @@ public class PkgInstallerService extends IntentService {
     private void createNotificationForInstallAndSaveToPreferences(NotificationManager notificationManager,
                                                                   PendingIntent resultPendingIntent) {
         String CHANNEL_ID = "PkgInstallerService Channel ID";
-        String CHANNEL_NAME = "PkgInstallerService Channel Name";
+        String CHANNEL_NAME = "PkgInstallerService Channel";
 
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
 
