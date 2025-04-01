@@ -138,7 +138,7 @@ public class AppInstallerService extends IntentService {
                 context,
                 getUniqueId(),
                 pendingIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
     }
 
