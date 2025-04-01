@@ -64,7 +64,7 @@
             android:exported="false" />
 
         <service
-            android:name=".app.PkgInstallerService"
+            android:name=".pkg.PkgInstallerService"
             android:exported="false" />
 
         <receiver
