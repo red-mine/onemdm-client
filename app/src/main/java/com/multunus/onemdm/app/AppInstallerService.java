@@ -35,7 +35,7 @@ public class AppInstallerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Logger.debug("AppInstallerService  started");
+        Logger.debug("AppInstallerService started");
         this.context = getApplicationContext();
         this.app = intent.getParcelableExtra(Config.APP_DATA);
         this.apkURL = app.getApkUrl();
