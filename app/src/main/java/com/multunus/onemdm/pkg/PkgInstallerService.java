@@ -33,7 +33,7 @@ public class PkgInstallerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Logger.debug("PkgInstallerService  started");
+        Logger.debug("PkgInstallerService started");
         this.context = getApplicationContext();
         this.pkg = intent.getParcelableExtra(Config.OTA_DATA);
         this.otaURL = pkg.getOtaUrl();
@@ -138,7 +138,7 @@ public class PkgInstallerService extends IntentService {
                 context,
                 getUniqueId(),
                 pendingIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
     }
 
