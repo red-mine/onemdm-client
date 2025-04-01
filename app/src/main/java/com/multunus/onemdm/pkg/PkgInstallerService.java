@@ -15,6 +15,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 
+import androidx.core.content.FileProvider;
+
 import com.multunus.onemdm.R;
 import com.multunus.onemdm.config.Config;
 import com.multunus.onemdm.model.Pkg;
@@ -76,7 +78,7 @@ public class PkgInstallerService extends IntentService {
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setDescription("Downloading...");
         request.setTitle(getString(R.string.app_name));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "onemdm.apk");
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "update.zip");
         return downloadManager.enqueue(request);
     }
 
@@ -130,10 +132,12 @@ public class PkgInstallerService extends IntentService {
 
     private PendingIntent createActionForInstallAfterDownload() {
         Intent pendingIntent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-        pendingIntent.setData(Uri.fromFile(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS + "/onemdm.apk")));
+        Uri otaURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider",
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/update.zip"));
+        pendingIntent.setData(otaURI);
         pendingIntent.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true);
         pendingIntent.putExtra(Intent.EXTRA_INSTALLER_PACKAGE_NAME, pkg.getFingerPrint());
+        pendingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         return PendingIntent.getActivity(
                 context,
                 getUniqueId(),
